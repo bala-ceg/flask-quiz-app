@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz with Next Button and Answer Button</title>
+<style>
+    table {
+        border-collapse: collapse;
+        width: 100%;
+    }
+    th, td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    button {
+        padding: 8px 16px;
+        cursor: pointer;
+        margin-right: 10px;
+    }
+</style>
+</head>
+<body>
+
+<table id="quizTable">
+    <thead>
+        <tr>
+            <th>Question</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for question in questions %}
+        <tr>
+            <td>{{ question.Question }}</td>
+            <td style="display: none;">{{ question.Answer }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<button onclick="nextQuestion()">Next</button>
+<button onclick="showAnswer()">Show Answer</button>
+
+<script>
+    let currentQuestion = 0;
+    const questions = document.querySelectorAll("#quizTable tbody tr");
+
+    function showQuestion(questionIndex) {
+        questions.forEach((question, index) => {
+            if (index === questionIndex) {
+                question.style.display = "table-row";
+            } else {
+                question.style.display = "none";
+            }
+        });
+    }
+
+    function nextQuestion() {
+        currentQuestion++;
+        if (currentQuestion >= questions.length) {
+            currentQuestion = 0; // If end of questions, go back to first question
+        }
+        showQuestion(currentQuestion);
+    }
+
+    function showAnswer() {
+        const answerCell = questions[currentQuestion].querySelector('td:last-child');
+        alert(answerCell.textContent);
+    }
+
+    // Show the first question initially
+    showQuestion(currentQuestion);
+</script>
+
+</body>
+</html>
