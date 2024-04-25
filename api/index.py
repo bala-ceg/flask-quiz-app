@@ -18,7 +18,7 @@ df = pd.DataFrame({
 
 @app.route('/quiz')
 def quiz():
-    return render_template('quiz.html', questions=df.to_dict(orient='records'))
+    return render_template('index.html', questions=df.to_dict(orient='records'))
 
 
 @app.route('/')
